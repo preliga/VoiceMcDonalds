@@ -1,0 +1,182 @@
+td{
+    vertical-align: middle !important;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+
+
+/*!
+ * Start Bootstrap - Business Casual (https://startbootstrap.com/template-overviews/business-casual)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-business-casual/blob/master/LICENSE)
+ */
+
+body {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    background: url('/images/bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+h1, h2, h3, h4, h5, h6, .text-heading {
+    font-family: "Josefin Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+.tagline-upper {
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.tagline-lower {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.text-expanded {
+    letter-spacing: 2px;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.text-lg {
+    font-size: 1.25rem;
+}
+
+.bg-faded {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.bg-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+hr.divider {
+    border-color: #292b2c;
+    max-width: 250px;
+}
+
+.map-container iframe {
+    pointer-events: none;
+}
+
+.map-container iframe.clicked {
+    pointer-events: auto;
+}
+
+
+
+
+
+/**
+loader
+ */
+
+#loader {
+    width:200px; margin-left: -100px;
+    height:150px; margin-top: -75px;
+    position:absolute; top:200px; left:50%;
+}
+
+ul#loadbar {
+    text-align: center;
+    list-style: none;
+    width: 200px;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 75px;
+}
+
+ul#loadbar li {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-left: 5px;
+    /*opacity: 2 !important;*/
+}
+
+ul#loadbar li:first-child {
+    margin-left: 0;
+}
+
+
+.barlittle {
+
+    background-color: #2187e7;
+    background-image: -moz-linear-gradient(45deg, #2e772e 25%, #dcd856);
+    background-image: -webkit-linear-gradient(45deg, #2e772e 25%, #dcd856);
+    border-left: 1px solid #111;
+    border-top: 1px solid #111;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-left: 5px;
+    opacity: 0.3;
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-animation: move 1s infinite linear;
+    -webkit-animation: move 1s infinite linear;
+}
+
+#block_1 {
+    -moz-animation-delay: .4s;
+    -webkit-animation-delay: .4s;
+}
+
+#block_2 {
+    -moz-animation-delay: .3s;
+    -webkit-animation-delay: .3s;
+}
+
+#block_3 {
+    -moz-animation-delay: .2s;
+    -webkit-animation-delay: .2s;
+}
+
+#block_4 {
+    -moz-animation-delay: .3s;
+    -webkit-animation-delay: .3s;
+}
+
+#block_5 {
+    -moz-animation-delay: .4s;
+    -webkit-animation-delay: .4s;
+}
+
+@-moz-keyframes move {
+    0% {
+        -moz-transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        -moz-transform: scale(0.7);
+        opacity: 0.1;
+    }
+}
+
+@-webkit-keyframes move {
+    0% {
+        -webkit-transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: scale(0.7);
+        opacity: 0.1;
+    }
+}
