@@ -1,0 +1,3 @@
+[submodule "library/Pig"]
+	path = library/Pig
+	url = https://github.com/preliga/PigFrameworkLibrary
