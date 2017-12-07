@@ -1,0 +1,6 @@
+# This is cache directory and it must exists before runs application.
+
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore
