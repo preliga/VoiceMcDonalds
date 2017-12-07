@@ -2,7 +2,7 @@
 
 use Google\Cloud\Storage\StorageClient;
 use Google\Cloud\Speech\SpeechClient;
-use library\Pig\model\Config;
+use library\PigFramework\model\Config;
 use resource\action\Base;
 
 /**

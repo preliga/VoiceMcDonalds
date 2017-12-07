@@ -1,7 +1,7 @@
 <?php
 
 require __DIR__.'/../vendor/autoload.php';
-require __DIR__ . '/../library/Pig/App.php';
+require __DIR__ . '/../library/PigFramework/App.php';
 
 define('APPLICATION_ENV', 'development');
 
