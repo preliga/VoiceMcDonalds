@@ -1,35 +1,36 @@
 'use strict';
 define(
-    [
-        // '/scripts/lib/Pig/Action.js'
-    ],
+    [],
     function () {
         var $this;
-        return class VXMLParser{
+        return class VXMLParser {
 
-            constructor(url){
+            constructor(url) {
                 $this = this;
                 $this.url = url.substr(9);
                 $this.init();
             }
 
 
-
-            init(){
+            init() {
                 var url = "/dialog?file=" + $this.url;
 
-                console.log($this.url);
+                // console.log($this.url);
                 var myHeaders = new Headers();
 
-                var myInit = { method: 'GET',
+                var myInit = {
+                    method: 'GET',
                     headers: myHeaders,
                     mode: 'cors',
-                    cache: 'default' };
-                console.log(url);
+                    cache: 'default'
+                };
+
+                // console.log(url);
+
                 fetch(url, myInit)
                     .then(response => response.text())
                     .then(xmlString => $.parseXML(xmlString))
-                    .then(function(xml){
+                    .then(function (xml) {
                         $this.parse(xml)
                     })
                 ;
@@ -38,15 +39,69 @@ define(
 
             parse(xml) {
 
-                var firstPrompt = xml.getElementsByTagName("form")[0].getElementsByTagName("block")[0].getElementsByTagName("prompt")[0].textContent;
+                $this.recognition().then(function (recognized) {
+                    console.log(recognized);
 
-                $this.speech(firstPrompt);
-                console.log(xml.getElementsByTagName("form")[0].getElementsByTagName("block")[0].getElementsByTagName("prompt")[0].textContent);
+                    $this.recognition().then(function (recognized2) {
+                        console.log(recognized2);
+                        console.log(recognized);
+                    });
+                });
+
+                // $this.recognition();
+                // var firstPrompt = xml.getElementsByTagName("form")[0].getElementsByTagName("block")[0].getElementsByTagName("prompt")[0].textContent;
+                //
+                // $this.speech(firstPrompt);
+                // console.log(xml.getElementsByTagName("form")[0].getElementsByTagName("block")[0].getElementsByTagName("prompt")[0].textContent);
             }
 
-            speech(messageText){
+            recognition() {
+                return new Promise((resolve, reject) => {
+                    Fr.voice.record($("#live").is(":checked"), function () {
+                        $(".recorder").show();
+                        Fr.voice.stopRecordingAfter(5000, function () {
+                            $(".recorder").hide();
+                            // alert("Recording stopped after 5 seconds");
+
+                            Fr.voice.export(function (audio) {
+                                resolve($this.speechRecognition(audio));
+                            }, "base64");
+                        });
+                    });
+                });
+            }
+
+            speech(messageText) {
                 var msg = new SpeechSynthesisUtterance(messageText);
                 window.speechSynthesis.speak(msg);
+            }
+
+
+
+            speechRecognition(audio) {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: "/speechRecognition?json=true",
+                        method: 'POST',
+                        beforeSend: function () {
+                            $("#loader").show();
+                        },
+                        data: {
+                            audio: audio
+                        }
+                    }).done(function (response) {
+                        $("#loader").hide();
+                        var audioText = "";
+                        for (var value of response.data.speechRecognition) {
+                            $this.speech(value);
+                            audioText += value + "<BR>";
+                        }
+
+                        $("#audioText").html(audioText);
+
+                        resolve(audioText);
+                    });
+                });
             }
         };
     });

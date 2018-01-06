@@ -15,55 +15,55 @@ define(
             afterRender() {
                 super.afterRender();
 
-                $this.vxmlParser.speech('Witaj mój przyjacielu. Co chciałbyś zjeść?');
+                // $this.vxmlParser.speech('Witaj mój przyjacielu. Co chciałbyś zjeść?');
 
-                $(document).on('click', '.speechRecognition', function () {
-                    Fr.voice.export(function (audio) {
-                        speechRecognition(audio);
-                    }, "base64");
-                });
-
-
-                $(document).on("click", "#record:not(.disabled)", function () {
-                    Fr.voice.record($("#live").is(":checked"), function () {
-                        $(".recordButton").addClass("disabled");
-
-                        $("#live").addClass("disabled");
-                        $(".one").removeClass("disabled");
-
-                        makeWaveform();
-                    });
-                });
-
-                $(document).on("click", "#recordFor5:not(.disabled)", function () {
-                    Fr.voice.record($("#live").is(":checked"), function () {
-                        $(".recordButton").addClass("disabled");
-
-                        $("#live").addClass("disabled");
-                        $(".one").removeClass("disabled");
-
-                        makeWaveform();
-                    });
-
-                    Fr.voice.stopRecordingAfter(5000, function () {
-                        // speechRecognition(audio);
-                        alert("Recording stopped after 5 seconds");
-                    });
-                });
-
-                $(document).on("click", "#pause:not(.disabled)", function () {
-                    if ($(this).hasClass("resume")) {
-                        Fr.voice.resume();
-                        $(this).replaceWith('<a class="button one" id="pause">Pause</a>');
-                    } else {
-                        Fr.voice.pause();
-                        $(this).replaceWith('<a class="button one resume" id="pause">Resume</a>');
-                    }
-                });
-
-                $(document).on("click", "#stop:not(.disabled)", function () {
-                    restore();
-                });
+                // $(document).on('click', '.speechRecognition', function () {
+                //     Fr.voice.export(function (audio) {
+                //         speechRecognition(audio);
+                //     }, "base64");
+                // });
+                //
+                //
+                // $(document).on("click", "#record:not(.disabled)", function () {
+                //     Fr.voice.record($("#live").is(":checked"), function () {
+                //         $(".recordButton").addClass("disabled");
+                //
+                //         $("#live").addClass("disabled");
+                //         $(".one").removeClass("disabled");
+                //
+                //         makeWaveform();
+                //     });
+                // });
+                //
+                // $(document).on("click", "#recordFor5:not(.disabled)", function () {
+                //     Fr.voice.record($("#live").is(":checked"), function () {
+                //         $(".recordButton").addClass("disabled");
+                //
+                //         $("#live").addClass("disabled");
+                //         $(".one").removeClass("disabled");
+                //
+                //         makeWaveform();
+                //     });
+                //
+                //     Fr.voice.stopRecordingAfter(5000, function () {
+                //         // speechRecognition(audio);
+                //         alert("Recording stopped after 5 seconds");
+                //     });
+                // });
+                //
+                // $(document).on("click", "#pause:not(.disabled)", function () {
+                //     if ($(this).hasClass("resume")) {
+                //         Fr.voice.resume();
+                //         $(this).replaceWith('<a class="button one" id="pause">Pause</a>');
+                //     } else {
+                //         Fr.voice.pause();
+                //         $(this).replaceWith('<a class="button one resume" id="pause">Resume</a>');
+                //     }
+                // });
+                //
+                // $(document).on("click", "#stop:not(.disabled)", function () {
+                //     restore();
+                // });
 
             }
         };

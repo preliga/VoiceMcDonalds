@@ -10,6 +10,11 @@ define(
 
             initAction() {
                 $this = this;
+
+            }
+
+            afterRender() {
+                console.log("QWE");
                 $this.vxmlParser = new VXMLParser(view.file);
             }
         };

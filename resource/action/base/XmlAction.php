@@ -2,7 +2,7 @@
 
 namespace resource\action\base;
 
-use library\Pig\model\{
+use library\PigFramework\model\{
     Statement, View
 };
 use resource\action\Base;
@@ -21,6 +21,7 @@ abstract class XmlAction extends Base
     public function init()
     {
         $this->statement = Statement::getInstance();
+
         $this->view = new class($this->file, 'vxml') extends View
         {
             public function assignVariableJs(array $data)

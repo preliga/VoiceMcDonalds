@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>VoiceMcDonalds</title>
+    <title>VoiceMcDonald's</title>
     {$scriptLoader->includeAllCSS()}
 
     {if file_exists("$file.css")}
@@ -20,12 +20,10 @@
 <body>
 <div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block"
      onclick="window.location = '/'" style="cursor: pointer;">
-    Voice McDonalds
+    Voice McDonald's
 </div>
 
 <div class="page">
-    {*<div class="container">*}
-
     <div id="loader" style="display: none">
         <ul id="loadbar">
             <li>
@@ -46,9 +44,14 @@
         </ul>
     </div>
 
-    {if file_exists("$file.tpl")}
-        {include file="{$file}.tpl"}
-    {/if}
+    {*<div id="recorderLogo" style="a">*}
+        {*<i class="fa fa-microphone fa-5x" aria-hidden="true"></i>*}
+    {*</div>*}
+    <div class="container">
+        {if file_exists("$file.tpl")}
+            {include file="{$file}.tpl"}
+        {/if}
+    </div>
 </div>
 
 

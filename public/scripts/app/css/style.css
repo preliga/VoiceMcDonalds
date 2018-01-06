@@ -7,6 +7,13 @@ td{
 }
 
 
+.recorder {
+    position: absolute;
+    padding: 5px;
+    margin: 5px;
+    color: red
+}
+
 
 /*!
  * Start Bootstrap - Business Casual (https://startbootstrap.com/template-overviews/business-casual)

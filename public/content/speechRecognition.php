@@ -15,8 +15,6 @@ class speechRecognition extends Base
 {
     public function onAction()
     {
-//        die(var_dump("TEST"));
-        
         $audio = $this->getPost('audio');
 
 //        file_put_contents('../files/audio/test.wav', base64_decode(substr($audio,22)));

@@ -1,13 +1,15 @@
 <script src="scripts/lib/record/recorder.js"></script>
 <script src="scripts/lib/record/Fr.voice.js"></script>
 
-<div class="container">
+    <div class="recorder" style="display: none">
+        <i class="fa fa-microphone fa-4x" aria-hidden="true"></i>
+    </div>
+
 
     <div class="bg-faded p-4 my-4">
         <!-- Welcome Message -->
         <div class="text-center mt-4">
-            <div class="text-heading text-muted text-lg">Welcome To McDonalds</div>
-            {*<h1 class="my-2">Choose movie</h1>*}
+            <div class="text-heading text-muted text-lg">Welcome To McDonald's</div>
         </div>
 
         <div id="audioText"></div>
@@ -15,43 +17,16 @@
         <button class="speechRecognition btn btn-success">speechRecognition</button>
 
         <br><br>
-        <h2>Record</h2>
-        <audio controls id="audio"></audio>
-        <div>
-            <a class="button recordButton" id="record">Record</a>
-            <a class="button recordButton" id="recordFor5">Record For 5 Seconds</a>
-            <a class="button disabled one" id="pause">Pause</a>
-            <a class="button disabled one" id="stop">Reset</a>
-        </div><br/>
+        <h2>Record <i class="fa fa-microphone" aria-hidden="true"></i></h2>
+        {*<audio controls id="audio"></audio>*}
         {*<div>*}
-            {*<input class="button" type="checkbox" id="live"/>*}
-            {*<label for="live">Live Output</label>*}
-        {*</div>*}
-        {*<div data-type="wav">*}
-            {*<p>WAV Controls:</p>*}
-            {*<a class="button disabled one" id="play">Play</a>*}
-            {*<a class="button disabled one" id="download">Download</a>*}
-            {*<a class="button disabled one" id="base64">Base64 URL</a>*}
-            {*<a class="button disabled one" id="save">Upload to Server</a>*}
-        {*</div>*}
-        {*<div data-type="mp3">*}
-            {*<p>MP3 Controls:</p>*}
-            {*<a class="button disabled one" id="play">Play</a>*}
-            {*<a class="button disabled one" id="download">Download</a>*}
-            {*<a class="button disabled one" id="base64">Base64 URL</a>*}
-            {*<a class="button disabled one" id="save">Upload to Server</a>*}
-        {*</div>*}
-
-        {*<div id="block_1" class="barlittle"></div>*}
-        {*<div id="block_2" class="barlittle"></div>*}
-        {*<div id="block_3" class="barlittle"></div>*}
-        {*<div id="block_4" class="barlittle"></div>*}
-        {*<div id="block_5" class="barlittle"></div>*}
-
+            {*<a class="button recordButton" id="record">Record</a>*}
+            {*<a class="button recordButton" id="recordFor5">Record For 5 Seconds</a>*}
+            {*<a class="button disabled one" id="pause">Pause</a>*}
+            {*<a class="button disabled one" id="stop">Reset</a>*}
+        {*</div><br/>*}
 
         <canvas id="level" height="200" width="500"></canvas>
-
-
     </div>
 </div>
 <style>
