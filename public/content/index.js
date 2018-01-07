@@ -19,37 +19,56 @@ define(
 
                 $this.vxmlParser.parse(xml);
             }
+
+            afterRender() {
+                super.afterRender();
+
+                $("input[name='type']").keyup(function(){
+                    events('type')
+                });
+            }
         };
 
         function events(name) {
-            // console.log(name);
-            // console.log($("input[name='" + name + "']").val());
 
-            let typ = $("input[name='" + name + "']").val() == 'na miejscu'? 1 : 2;
-
-            /**
-             * Typ
-             * 1 - na miejscu
-             * 2 - na dowóz
-             */
+            let value = $("input[name='" + name + "']").val().trim().toLowerCase();
 
             switch (name) {
                 case 'type':
-                    $.ajax({
-                        url: "/index?json=true",
-                        method: 'POST',
-                        beforeSend: function () {
-                            $("#loader").show();
-                        },
-                        data: {
-                            type: typ
-                        },
-                        success: function (respond){
-                            $("#loader").hide();
 
-                            window.location = "/order";
-                        }
-                    });
+                    /**
+                     * Typ
+                     * 1 - na miejscu
+                     * 2 - na dowóz
+                     */
+                    let typ = 0;
+
+                    if (value === 'na miejscu') {
+                        typ = 1;
+                    }
+
+                    if (value === 'na dowóz') {
+                        typ = 2;
+                    }
+
+                    if (typ !== 0) {
+                        $.ajax({
+                            url: "/setType",
+                            method: 'GET',
+                            data: {
+                                type: typ,
+                                json: true
+                            },
+                            beforeSend: function () {
+                                $("#loader").show();
+                            },
+                            success: function (respond) {
+                                $("#loader").hide();
+
+                                window.location = "/order";
+                            }
+                        });
+                    }
                     break;
 
             }

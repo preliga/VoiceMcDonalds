@@ -8,9 +8,11 @@ class order extends Base
     public function onAction()
     {
         $type = Session::get('type');
+        if (empty($type)) {
+            $this->redirect();
+        }
 
         $this->view->type = $type;
-
 
         $shopCard = Session::get('shopCard');
         if (empty($shopCard)) {
@@ -23,16 +25,22 @@ class order extends Base
         $categories = $this->getCategories();
         $this->view->categories = $categories;
 
-
-//        die(var_dump(Session::get('type')));
-
-//        Session::set('type', null);
+        $products = $this->getProducts();
+        $this->view->products = $products;
     }
 
     public function getCategories()
     {
         $sql = $this->db->select()
             ->from(['c' => 'category']);
+
+        return $this->db->fetchAll($sql);
+    }
+
+    public function getProducts()
+    {
+        $sql = $this->db->select()
+            ->from(['p' => 'product']);
 
         return $this->db->fetchAll($sql);
     }

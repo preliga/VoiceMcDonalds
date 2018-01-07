@@ -14,7 +14,7 @@ define(
             parse(xml) {
                 // $this.setField('type', "na dowóz");
                 //
-                // $this.finish();
+                $this.finish();
                 //
                 // $this.recognition().then(function (recognized) {
                 //     console.log(recognized);

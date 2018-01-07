@@ -17,8 +17,6 @@ class speechRecognition extends Base
     {
         $audio = $this->getPost('audio');
 
-//        file_put_contents('../files/audio/test.wav', base64_decode(substr($audio,22)));
-
         # Instantiates a client
         $speech = new SpeechClient(Config::getInstance()->getConfig('googleProject'));
 
@@ -28,16 +26,7 @@ class speechRecognition extends Base
             'encoding' => 'LINEAR16',
         ];
 
-//        $file = '../files/audio/test.wav';
-
-//        die(var_dump(file_exists($file)));
-//
-//        if(file_exists($file)){
-//
-//        }
-
-        $file = base64_decode(substr($audio,22));
-//        $file = file_get_contents($file);
+        $file = base64_decode(substr($audio, 22));
 
         $results = $speech->recognize($file, $options);
 
