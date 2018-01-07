@@ -10,12 +10,19 @@ define(
 
             initAction() {
                 $this = this;
+                $this.vxmlParser = new VXMLParser(view.file);
 
+                $this.vxmlParser.events = function () {
+
+                };
+
+                $this.vxmlParser.finish = function () {
+
+                };
             }
 
             afterRender() {
-                console.log("QWE");
-                $this.vxmlParser = new VXMLParser(view.file);
+
             }
         };
     });

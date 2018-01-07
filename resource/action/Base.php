@@ -16,7 +16,7 @@ abstract class Base extends Action
     /**
      * @var Zend_Db_Adapter_Mysqli
      */
-//    protected $db;
+    protected $db;
 
     /**
      *
@@ -28,9 +28,9 @@ abstract class Base extends Action
         $this->definedJS();
         $this->definedCSS();
 
-//        $config = Config::getInstance()->getConfig('db');
-//        $db = Db::getInstance($config['cinema'], 'cinema');
-//        $this->db = $db->getDb();
+        $config = Config::getInstance()->getConfig('db');
+        $db = Db::getInstance($config['voicemcdonalds'], 'voicemcdonalds');
+        $this->db = $db->getDb();
     }
 
     /**
@@ -42,6 +42,8 @@ abstract class Base extends Action
 //        $this->addJS('/scripts/lib/datetimepicker/jquery.datetimepicker.full.min.js');
         $this->addJS('/scripts/lib/popper/popper.min.js');
         $this->addJS('/scripts/lib/bootstrap/js/bootstrap.min.js');
+        $this->addJS('scripts/lib/record/recorder.js');
+        $this->addJS('/scripts/lib/record/Fr.voice.js');
     }
 
     /**

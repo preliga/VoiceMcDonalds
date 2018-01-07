@@ -14,6 +14,10 @@ td{
     color: red
 }
 
+hr.HRStyle {
+    border-top: 1px dashed #8c8b8b;
+    border-bottom: 1px dashed #fff;
+}
 
 /*!
  * Start Bootstrap - Business Casual (https://startbootstrap.com/template-overviews/business-casual)

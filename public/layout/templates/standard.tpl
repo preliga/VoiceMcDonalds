@@ -44,22 +44,15 @@
         </ul>
     </div>
 
-    {*<div id="recorderLogo" style="a">*}
-        {*<i class="fa fa-microphone fa-5x" aria-hidden="true"></i>*}
-    {*</div>*}
     <div class="container">
+        <div class="recorder" style="display: none">
+            <i class="fa fa-microphone fa-4x" aria-hidden="true"></i>
+        </div>
         {if file_exists("$file.tpl")}
             {include file="{$file}.tpl"}
         {/if}
     </div>
 </div>
-
-
-{*<footer class="bg-faded text-center py-1" style="position:fixed; bottom:0; width: 100%;">*}
-    {*<div class="container">*}
-        {*<a href="/admin/login"> Admin panel</a>*}
-    {*</div>*}
-{*</footer>*}
 
 <!-- App -->
 <script data-main="/scripts/app/js/app" src="/scripts/lib/require.js"></script>

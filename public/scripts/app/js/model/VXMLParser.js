@@ -8,47 +8,23 @@ define(
             constructor(url) {
                 $this = this;
                 $this.url = url.substr(9);
-                $this.init();
-            }
-
-
-            init() {
-                var url = "/dialog?file=" + $this.url;
-
-                // console.log($this.url);
-                var myHeaders = new Headers();
-
-                var myInit = {
-                    method: 'GET',
-                    headers: myHeaders,
-                    mode: 'cors',
-                    cache: 'default'
-                };
-
-                // console.log(url);
-
-                fetch(url, myInit)
-                    .then(response => response.text())
-                    .then(xmlString => $.parseXML(xmlString))
-                    .then(function (xml) {
-                        $this.parse(xml)
-                    })
-                ;
-
+                // $this.init();
             }
 
             parse(xml) {
+                // $this.setField('type', "na dowóz");
+                //
+                // $this.finish();
+                //
+                // $this.recognition().then(function (recognized) {
+                //     console.log(recognized);
+                //
+                //     $this.recognition().then(function (recognized2) {
+                //         console.log(recognized2);
+                //         console.log(recognized);
+                //     });
+                // });
 
-                $this.recognition().then(function (recognized) {
-                    console.log(recognized);
-
-                    $this.recognition().then(function (recognized2) {
-                        console.log(recognized2);
-                        console.log(recognized);
-                    });
-                });
-
-                // $this.recognition();
                 // var firstPrompt = xml.getElementsByTagName("form")[0].getElementsByTagName("block")[0].getElementsByTagName("prompt")[0].textContent;
                 //
                 // $this.speech(firstPrompt);
@@ -77,6 +53,11 @@ define(
             }
 
 
+            setField(name, value) {
+                $("input[name='" + name + "']").val(value);
+
+                $this.events(name);
+            }
 
             speechRecognition(audio) {
                 return new Promise((resolve, reject) => {
