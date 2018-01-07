@@ -46,7 +46,7 @@ define(
         };
 
         function events(name) {
-            let value = $("input[name='" + name + "']").val();
+            let value = $("input[name='" + name + "']").val().trim().toLowerCase();
 
             switch (name) {
                 case 'category':
@@ -66,7 +66,6 @@ define(
                     break;
 
                 case 'product':
-
                     $this.product = null;
                     for (let item of view.products) {
                         if (value === item.name.trim().toLowerCase()) {
@@ -75,6 +74,7 @@ define(
                     }
 
                     if ($this.product !== null) {
+                        console.log("test");
                         $(".amount").slideDown("slow");
                     }
 
