@@ -122,8 +122,14 @@ define(
 
                                 $('.shopCard').prepend('<tr><td>' + $this.product.name + '</td><td>' + amount + '</td><td>' + $this.product.price + '</td></tr>');
                                 $("#priceSum").html(respond.data.shopCard.priceSum);
+
+                                $(".again").slideDown('slow');
                             }
                         });
+                    }
+
+                    if (value === 'nie') {
+                        $(".again").slideDown('slow');
                     }
 
                     break;
