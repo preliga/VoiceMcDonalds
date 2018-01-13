@@ -22,12 +22,12 @@ define(
 
             parse(xml) {
 
-                if (window.location.pathname !== '/order'){
-                    $this.setField('type', "na dowóz").then(function(){
-                        // VXMLParser.goToSubdialog('/order', {type: 'na dowóz'});
-                        VXMLParser.goToSubdialog('/order');
-                    });
-                }
+                // if (window.location.pathname !== '/order'){
+                //     $this.setField('type', "na dowóz").then(function(){
+                //         // VXMLParser.goToSubdialog('/order', {type: 'na dowóz'});
+                //         VXMLParser.goToSubdialog('/order');
+                //     });
+                // }
 
                 // VXMLParser.speech("Dzień dobry");
                 // $this.setField('type', "na dowóz");
