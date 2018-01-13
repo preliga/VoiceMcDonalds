@@ -22,11 +22,14 @@ define(
         };
 
         function events(name) {
+            return new Promise((resolve, reject) => {
 
+                resolve(true);
+            });
         }
 
         function finish() {
-            window.location = "/resetShopCard";
+            // window.location = "/resetShopCard";
         }
     }
 );

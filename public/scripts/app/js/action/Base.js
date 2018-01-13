@@ -10,7 +10,17 @@ define(
 
             initAction() {
                 $this = this;
-                $this.vxmlParser = new VXMLParser(view.file);
+
+
+                let params = {};
+
+                if(typeof view.params.params != 'undefined'){
+                    let params = JSON.parse(view.params.params);
+                }
+
+                console.log(params);
+                
+                $this.vxmlParser = new VXMLParser(params);
 
                 $this.vxmlParser.events = function () {
 

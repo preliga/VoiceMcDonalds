@@ -2,34 +2,54 @@
 define(
     [],
     function () {
-        var $this;
+        let $this;
         return class VXMLParser {
 
-            constructor(url) {
+            static goToSubdialog(src, params = {}) {
+                console.log(params);
+                window.location = src + "?params="+JSON.stringify(params);
+            }
+
+            static speech(messageText) {
+                let msg = new SpeechSynthesisUtterance(messageText);
+                window.speechSynthesis.speak(msg);
+            }
+
+            constructor(params) {
                 $this = this;
-                $this.url = url.substr(9);
-                // $this.init();
+                $this.params = params;
             }
 
             parse(xml) {
+
+                if (window.location.pathname !== '/order'){
+                    $this.setField('type', "na dowóz").then(function(){
+                        // VXMLParser.goToSubdialog('/order', {type: 'na dowóz'});
+                        VXMLParser.goToSubdialog('/order');
+                    });
+                }
+
+                // VXMLParser.speech("Dzień dobry");
                 // $this.setField('type', "na dowóz");
-                //
-                $this.finish();
+
+                // $this.finish();
                 //
                 // $this.recognition().then(function (recognized) {
                 //     console.log(recognized);
                 //
-                //     $this.recognition().then(function (recognized2) {
-                //         console.log(recognized2);
-                //         console.log(recognized);
-                //     });
+                //     // $this.recognition().then(function (recognized2) {
+                //     //     console.log(recognized2);
+                //     //     console.log(recognized);
+                //     // });
                 // });
-
+                //
                 // var firstPrompt = xml.getElementsByTagName("form")[0].getElementsByTagName("block")[0].getElementsByTagName("prompt")[0].textContent;
                 //
-                // $this.speech(firstPrompt);
+                // VXMLParser.speech(firstPrompt);
                 // console.log(xml.getElementsByTagName("form")[0].getElementsByTagName("block")[0].getElementsByTagName("prompt")[0].textContent);
             }
+
+
 
             recognition() {
                 return new Promise((resolve, reject) => {
@@ -47,16 +67,12 @@ define(
                 });
             }
 
-            speech(messageText) {
-                var msg = new SpeechSynthesisUtterance(messageText);
-                window.speechSynthesis.speak(msg);
-            }
-
-
             setField(name, value) {
-                $("input[name='" + name + "']").val(value);
+                return new Promise((resolve, reject) => {
+                    $("input[name='" + name + "']").val(value);
 
-                $this.events(name);
+                    resolve($this.events(name));
+                });
             }
 
             speechRecognition(audio) {
@@ -72,9 +88,9 @@ define(
                         }
                     }).done(function (response) {
                         $("#loader").hide();
-                        var audioText = "";
-                        for (var value of response.data.speechRecognition) {
-                            $this.speech(value);
+                        let audioText = "";
+                        for (let value of response.data.speechRecognition) {
+                            VXMLParser.speech(value);
                             audioText += value + "<BR>";
                         }
 

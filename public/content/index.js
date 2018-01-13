@@ -7,7 +7,7 @@ define(
         let $this;
         return class index extends Base {
 
-            initAction(){
+            initAction() {
                 super.initAction();
                 $this = this;
 
@@ -23,55 +23,56 @@ define(
             afterRender() {
                 super.afterRender();
 
-                $("input[name='type']").keyup(function(){
+                $("input[name='type']").keyup(function () {
                     events('type')
                 });
             }
         };
 
         function events(name) {
+            return new Promise((resolve, reject) => {
+                let value = $("input[name='" + name + "']").val().trim().toLowerCase();
 
-            let value = $("input[name='" + name + "']").val().trim().toLowerCase();
+                switch (name) {
+                    case 'type':
 
-            switch (name) {
-                case 'type':
+                        /**
+                         * Typ
+                         * 1 - na miejscu
+                         * 2 - na dowóz
+                         */
+                        let typ = 0;
 
-                    /**
-                     * Typ
-                     * 1 - na miejscu
-                     * 2 - na dowóz
-                     */
-                    let typ = 0;
+                        if (value === 'na miejscu') {
+                            typ = 1;
+                        }
 
-                    if (value === 'na miejscu') {
-                        typ = 1;
-                    }
+                        if (value === 'na dowóz') {
+                            typ = 2;
+                        }
 
-                    if (value === 'na dowóz') {
-                        typ = 2;
-                    }
+                        if (typ !== 0) {
+                            $.ajax({
+                                url: "/setType",
+                                method: 'GET',
+                                data: {
+                                    type: typ,
+                                    json: true
+                                },
+                                beforeSend: function () {
+                                    $("#loader").show();
+                                },
+                                success: function (respond) {
+                                    $("#loader").hide();
 
-                    if (typ !== 0) {
-                        $.ajax({
-                            url: "/setType",
-                            method: 'GET',
-                            data: {
-                                type: typ,
-                                json: true
-                            },
-                            beforeSend: function () {
-                                $("#loader").show();
-                            },
-                            success: function (respond) {
-                                $("#loader").hide();
-
-                                window.location = "/order";
-                            }
-                        });
-                    }
-                    break;
-
-            }
+                                    resolve(true);
+                                    // window.location = "/order";
+                                }
+                            });
+                        }
+                        break;
+                }
+            });
         }
 
         function finish() {

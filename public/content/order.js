@@ -46,111 +46,127 @@ define(
         };
 
         function events(name) {
-            let value = $("input[name='" + name + "']").val().trim().toLowerCase();
+            return new Promise((resolve, reject) => {
 
-            switch (name) {
-                case 'category':
-                    if (value !== 'dodatki') {
-                        $(".Dodatki").slideUp();
-                    }
+                let value = $("input[name='" + name + "']").val().trim().toLowerCase();
 
-                    if (value !== 'kanapki') {
-                        $(".Kanapki").slideUp();
-                    }
-
-                    if (value !== 'napoje') {
-                        $(".Napoje").slideUp();
-                    }
-
-                    $("." + value).slideDown("slow");
-                    break;
-
-                case 'product':
-                    $this.product = null;
-                    for (let item of view.products) {
-                        if (value === item.name.trim().toLowerCase()) {
-                            $this.product = item;
+                switch (name) {
+                    case 'category':
+                        if (value !== 'dodatki') {
+                            $(".Dodatki").slideUp();
                         }
-                    }
 
-                    if ($this.product !== null) {
-                        console.log("test");
-                        $(".amount").slideDown("slow");
-                    }
+                        if (value !== 'kanapki') {
+                            $(".Kanapki").slideUp();
+                        }
 
-                    break;
-                case 'amount':
+                        if (value !== 'napoje') {
+                            $(".Napoje").slideUp();
+                        }
 
-                    value = Number(value);
-                    if (Number.isInteger(value) && value > 0) {
-                        $this.amount = value;
+                        $("." + value).slideDown("slow");
 
-                        let html = '     <span>\n' +
-                            '                <img style="margin: 10px;" src="' + $this.product.picture + '"   height="200"/>\n' +
-                            '                <br><br>\n' +
-                            '                ' + $this.product.name + '\n' +
-                            '                <br>\n' +
-                            '                ' + $this.product.price + ' zł\n' +
-                            '                <br>\n' +
-                            '                Ilość: ' + $this.amount + ' \n' +
-                            '            </span>';
+                        resolve(true);
+                        break;
 
-                        $('.orderProduct').html(html);
-
-                        $(".amount").slideUp();
-                        $(".acceptOrder").slideDown("slow");
-                    }
-                    break;
-                case 'accept':
-
-                    let amount = $this.amount;
-
-                    if (value === 'tak') {
-                        $.ajax({
-                            url: "/addProduct",
-                            method: 'GET',
-                            data: {
-                                productId: $this.product.id,
-                                amount: amount,
-                                json: true
-                            },
-                            beforeSend: function () {
-                                $("#loader").show();
-                            },
-                            success: function (respond) {
-                                $("#loader").hide();
-
-                                $('.shopCard').prepend('<tr><td>' + $this.product.name + '</td><td>' + amount + '</td><td>' + $this.product.price + '</td></tr>');
-                                $("#priceSum").html(respond.data.shopCard.priceSum);
-
-                                $(".again").slideDown('slow');
+                    case 'product':
+                        $this.product = null;
+                        for (let item of view.products) {
+                            if (value === item.name.trim().toLowerCase()) {
+                                $this.product = item;
                             }
-                        });
-                    }
+                        }
 
-                    if (value === 'nie') {
-                        $(".again").slideDown('slow');
-                    }
+                        if ($this.product !== null) {
+                            console.log("test");
+                            $(".amount").slideDown("slow");
+                        }
 
-                    break;
-                case 'again':
-                    if (value === 'tak') {
-                        $(".Dodatki").slideUp();
-                        $(".Kanapki").slideUp();
-                        $(".Napoje").slideUp();
-                        $(".amount").slideUp();
-                        $(".acceptOrder").slideUp();
-                        $(".again").slideUp();
+                        resolve(true);
+                        break;
+                    case 'amount':
 
-                        $("input").val("");
-                    }
+                        value = Number(value);
+                        if (Number.isInteger(value) && value > 0) {
+                            $this.amount = value;
 
-                    if (value === 'nie') {
-                        window.location = '/acceptationOrder';
-                    }
+                            let html = '     <span>\n' +
+                                '                <img style="margin: 10px;" src="' + $this.product.picture + '"   height="200"/>\n' +
+                                '                <br><br>\n' +
+                                '                ' + $this.product.name + '\n' +
+                                '                <br>\n' +
+                                '                ' + $this.product.price + ' zł\n' +
+                                '                <br>\n' +
+                                '                Ilość: ' + $this.amount + ' \n' +
+                                '            </span>';
 
-                    break;
-            }
+                            $('.orderProduct').html(html);
+
+                            $(".amount").slideUp();
+                            $(".acceptOrder").slideDown("slow");
+                        }
+
+                        resolve(true);
+                        break;
+                    case 'accept':
+
+                        let amount = $this.amount;
+
+                        if (value === 'tak') {
+                            $.ajax({
+                                url: "/addProduct",
+                                method: 'GET',
+                                data: {
+                                    productId: $this.product.id,
+                                    amount: amount,
+                                    json: true
+                                },
+                                beforeSend: function () {
+                                    $("#loader").show();
+                                },
+                                success: function (respond) {
+                                    $("#loader").hide();
+
+                                    $('.shopCard').prepend('<tr><td>' + $this.product.name + '</td><td>' + amount + '</td><td>' + $this.product.price + '</td></tr>');
+                                    $("#priceSum").html(respond.data.shopCard.priceSum);
+
+                                    $(".again").slideDown('slow');
+
+                                    resolve(true);
+                                }
+                            });
+                        }
+
+                        if (value === 'nie') {
+                            $(".again").slideDown('slow');
+
+                            resolve(true);
+                        }
+
+                        break;
+                    case 'again':
+                        if (value === 'tak') {
+                            $(".Dodatki").slideUp();
+                            $(".Kanapki").slideUp();
+                            $(".Napoje").slideUp();
+                            $(".amount").slideUp();
+                            $(".acceptOrder").slideUp();
+                            $(".again").slideUp();
+
+                            $("input").val("");
+
+                            resolve(true);
+                        }
+
+                        if (value === 'nie') {
+
+                            resolve(true);
+                            // window.location = '/acceptationOrder';
+                        }
+
+                        break;
+                }
+            });
         }
 
         function finish() {

@@ -14,10 +14,6 @@ class paid extends Base
 {
     public function onAction()
     {
-//        $shopCard = ['products' => [], 'priceSum' => 0];
-//        Session::set('shopCard', $shopCard);
-//        Session::set('type', null);
-
         $paid = $this->getParam('paid');
         if (empty($paid)) {
             $this->redirect();
