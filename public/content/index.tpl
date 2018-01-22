@@ -39,14 +39,22 @@
 </div>
 
 <div id="vxml" style="display: none;">
-    <?xml version="1.0"?>
-    <vxml version="2.0">
-        <form>
-            <block>
-                <prompt>
-                    Witaj świecie!
-                </prompt>
-            </block>
-        </form>
-    </vxml>
+	<?xml version="1.0"?>
+	<vxml version="2.0">
+		<form>
+			<block>
+				<prompt>Witaj w mcdonalds!!!</prompt>
+			</block>
+			
+			<field name="type">
+				<prompt>Zamówienie na miejscu, czy na dowóz?</prompt>
+				<grammar>[na miejscu|na dowóz]</grammar>
+			</field>
+			
+			<subdialog name="order" src="/order">
+				<params name="type" expr="type"/>
+			</subdialog>
+		</form>
+	</vxml>
 </div>
+

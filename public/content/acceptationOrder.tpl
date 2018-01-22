@@ -58,14 +58,54 @@
 </div>
 
 <div id="vxml" style="display: none;">
-    <?xml version="1.0"?>
-    <vxml version="2.0">
-        <form>
-            <block>
-                <prompt>
-                    Witaj świecie!
-                </prompt>
-            </block>
-        </form>
-    </vxml>
+	<?xml version="1.0"?>
+	<vxml version="2.0">
+		<form>
+			<block>
+				<prompt>Witaj świecie!</prompt>
+			</block>
+
+
+
+            {if $type == 2}
+                <grammar>
+                </grammar>
+
+                <initial>
+                    <prompt>Podaj adres</prompt>
+                </initial>
+
+                <field name="streetNumber">
+                    <prompt>Podaj numer domu</prompt>
+                    <grammar>[1|2|3|4|5|6|7|8|9|10]</grammar>
+                </field>
+
+                <field name="streetName">
+                    <prompt>Podaj nazwę ulicy</prompt>
+                    <grammar>[Miodowa|Złota|Marszałkowska]</grammar>
+                </field>
+
+                <field name="city">
+                    <prompt>Podaj miasto</prompt>
+                    <grammar>[Warszawa|Brwinów|Pruszków]</grammar>
+                </field>
+            {/if}
+			<field name="paid">
+				<prompt>Czy zapłaciłeś?</prompt>
+				<grammar>[tak|nie]</grammar>
+			</field>
+			
+			<block>
+				<if cond="paid==tak">
+					<goto next="paid"/>
+				</if>
+			</block>
+			
+			<subdialog name="order" src="/paid?paid=nie"/>
+		</form>
+		
+		<form id="paid">
+			<subdialog name="order" src="/paid?paid=tak"/>
+		</form>
+	</vxml>
 </div>

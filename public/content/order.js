@@ -6,7 +6,6 @@ define(
     function (Base) {
         let $this;
         return class order extends Base {
-
             initAction() {
                 super.initAction();
                 $this = this;
@@ -14,7 +13,7 @@ define(
                 $this.vxmlParser.events = events;
                 $this.vxmlParser.finish = finish;
 
-                let xmlString = $('#vxml').html();
+                let xmlString = $('#vxml').html().trim().replace(/(?:\t|\r\n|\r|\n)/g,'');
                 let xml = $.parseXML(xmlString);
 
                 $this.vxmlParser.parse(xml);
@@ -52,6 +51,8 @@ define(
 
                 switch (name) {
                     case 'category':
+						console.log("event category");
+						
                         if (value !== 'dodatki') {
                             $(".Dodatki").slideUp();
                         }
@@ -70,6 +71,8 @@ define(
                         break;
 
                     case 'product':
+						console.log("event product");
+						
                         $this.product = null;
                         for (let item of view.products) {
                             if (value === item.name.trim().toLowerCase()) {
@@ -85,7 +88,8 @@ define(
                         resolve(true);
                         break;
                     case 'amount':
-
+						console.log("event amount");
+						
                         value = Number(value);
                         if (Number.isInteger(value) && value > 0) {
                             $this.amount = value;
@@ -109,7 +113,8 @@ define(
                         resolve(true);
                         break;
                     case 'accept':
-
+						console.log("event accept");
+						
                         let amount = $this.amount;
 
                         if (value === 'tak') {
@@ -145,6 +150,8 @@ define(
 
                         break;
                     case 'again':
+						console.log("event again");
+						
                         if (value === 'tak') {
                             $(".Dodatki").slideUp();
                             $(".Kanapki").slideUp();
@@ -161,7 +168,7 @@ define(
                         if (value === 'nie') {
 
                             resolve(true);
-                            // window.location = '/acceptationOrder';
+                            window.location = '/acceptationOrder';
                         }
 
                         break;

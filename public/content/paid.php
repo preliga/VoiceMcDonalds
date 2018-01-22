@@ -14,11 +14,10 @@ class paid extends Base
 {
     public function onAction()
     {
-        $paid = $this->getParam('paid');
-        if (empty($paid)) {
-            $this->redirect();
-        }
+        $paramsJSON = $this->getParam('params');
 
-        $this->view->paid = $paid;
+        $params = json_decode($paramsJSON, true);
+
+        $this->view->paid = $params['paid'];
     }
 }

@@ -6,7 +6,6 @@ define(
     function (Base) {
         let $this;
         return class paid extends Base {
-
             initAction(){
                 super.initAction();
                 $this = this;
@@ -14,7 +13,7 @@ define(
                 $this.vxmlParser.events = events;
                 $this.vxmlParser.finish = finish;
 
-                let xmlString = $('#vxml').html();
+                let xmlString = $('#vxml').html().trim().replace(/(?:\t|\r\n|\r|\n)/g,'');
                 let xml = $.parseXML(xmlString);
 
                 $this.vxmlParser.parse(xml);

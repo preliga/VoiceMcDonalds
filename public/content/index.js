@@ -6,7 +6,6 @@ define(
     function (Base) {
         let $this;
         return class index extends Base {
-
             initAction() {
                 super.initAction();
                 $this = this;
@@ -14,9 +13,9 @@ define(
                 $this.vxmlParser.events = events;
                 $this.vxmlParser.finish = finish;
 
-                let xmlString = $('#vxml').html();
+                let xmlString = $('#vxml').html().trim().replace(/(?:\t|\r\n|\r|\n)/g,'');
                 let xml = $.parseXML(xmlString);
-
+				
                 $this.vxmlParser.parse(xml);
             }
 
@@ -32,7 +31,7 @@ define(
         function events(name) {
             return new Promise((resolve, reject) => {
                 let value = $("input[name='" + name + "']").val().trim().toLowerCase();
-
+				
                 switch (name) {
                     case 'type':
 
@@ -66,7 +65,7 @@ define(
                                     $("#loader").hide();
 
                                     resolve(true);
-                                    // window.location = "/order";
+                                    //window.location = "/order";
                                 }
                             });
                         }

@@ -21,19 +21,12 @@
 </div>
 
 <div id="vxml" style="display: none;">
-    <?xml version="1.0"?>
-    <vxml version="2.0">
-        <form>
-            <block>
-                <prompt>
-                    {if $paid == 'nie'}
-                        Reset zamówienia
-                    {/if}
-                    {if $paid == 'tak'}
-                        Zamówienie w trakcie realizacji.
-                    {/if}
-                </prompt>
-            </block>
-        </form>
-    </vxml>
+	<?xml version="1.0"?>
+	<vxml version="2.0">
+		<form>
+			<block>
+				<prompt>Witaj</prompt>
+			</block>
+		</form>
+	</vxml>
 </div>

@@ -94,14 +94,64 @@
 </div>
 
 <div id="vxml" style="display: none;">
-    <?xml version="1.0"?>
-    <vxml version="2.0">
-        <form>
-            <block>
-                <prompt>
-                    Witaj świecie!
-                </prompt>
-            </block>
-        </form>
-    </vxml>
+	<?xml version="1.0"?>
+	<vxml version="2.0">
+		<form id="order">
+			
+			<field name="category">
+				<prompt>Podaj kategorię.</prompt>
+				<grammar>
+                    [dodatki|kanapki|napoje]
+                </grammar>
+			</field>
+			
+			<field name="product" cond="category==dodatki">
+				<prompt>Podaj produkt.</prompt>
+				<grammar>
+                    [małe frytki|duże frytki]
+                </grammar>
+			</field>
+			
+			<field name="product" cond="category==kanapki">
+				<prompt>Podaj produkt.</prompt>
+				<grammar>[bigmac|wieśmac|burger drwala]</grammar>
+			</field>
+			
+			<field name="product" cond="category==napoje">
+				<prompt>Podaj produkt.</prompt>
+				<grammar>[fanta|cola|sprite|herbata|kawa]</grammar>
+			</field>
+			
+			<field name="amount">
+				<prompt>Podaj ilość.</prompt>
+				<grammar>[1|2|3|4|5|6|7|8|9|10]</grammar>
+			</field>
+			
+			<field name="accept">
+				<prompt>Czy zamówienie się zgadza?</prompt>
+				<grammar>[tak|nie]</grammar>
+			</field>
+			
+			<field name="again">
+				<prompt>Czy chcesz zamówić coś jeszcze?</prompt>
+				<grammar>[tak|nie]</grammar>
+			</field>
+			
+			<block>
+				<if cond="again==tak">
+					<goto next="order"/>
+				</if>
+			</block>
+			
+			<subdialog name="acceptationOrder" src="/acceptationOrder">
+			</subdialog>
+		</form>
+	</vxml>
 </div>
+
+
+
+
+
+
+
