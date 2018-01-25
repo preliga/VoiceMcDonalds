@@ -28,7 +28,7 @@ define(
         }
 
         function finish() {
-            // window.location = "/resetShopCard";
+            window.location = "/resetShopCard";
         }
     }
 );

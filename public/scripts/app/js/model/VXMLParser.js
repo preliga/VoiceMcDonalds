@@ -5,10 +5,12 @@ define(
         let $this;
         var msgs = [];
         var form = {};
+        var grammar = {};
+        var count = 0;
         return class VXMLParser {
 
             static goToSubdialog(src, params = {}) {
-                console.log(params);
+                // console.log(params);
                 window.location = src + "?params=" + JSON.stringify(params);
             }
 
@@ -105,6 +107,8 @@ define(
                 return new Promise((resolve, reject) => {
                     //console.log("nodeName = " + node.nodeName);
 
+                    // console.log(node.nodeName);
+
                     switch (node.nodeName) {
                         case "block":
                             $this.doBlock(node, 0, false).then(function (ret) {
@@ -112,7 +116,7 @@ define(
                             });
                             break;
                         case "field":
-
+                            var fieldName = node.attributes["name"].textContent;
                             var condAttribute = node.attributes["cond"];
                             var cond = true;
 
@@ -123,25 +127,32 @@ define(
                                 }
                             }
                             if (cond) {
-                                var e_grammar = node.getElementsByTagName("grammar");
-                                var e_prompt = node.getElementsByTagName("prompt");
-                                console.log(e_prompt[0].textContent);
-                                VXMLParser.speech(e_prompt[0].textContent).then(function () {
-                                    var grammar = e_grammar[0].textContent.replace(/(?:]|\[)/g, '').trim().split("|");
-                                    console.log(grammar);
-                                    $this.recognitionGrammar(grammar).then(function (recognizedText) {
-                                        console.log("Powiedziałeś: " + recognizedText);
-                                        if (recognizedText == "") {
-                                            resolve(0);
-                                        } else {
-                                            form[node.attributes[0].textContent] = recognizedText;
-                                            $this.setField(node.attributes["name"].textContent, recognizedText).then(function () {
-                                                resolve(1); // trzba zawsze poczekać aż się pole ustawi bo bez tego trudno się wydostać z pierwszego ekranu
-                                            });
-                                            // resolve(1);
-                                        }
+                                if ((typeof form[fieldName]) != "undefined") {
+                                    console.log(form[fieldName]);
+                                    cond = false;
+                                    $this.setField(fieldName, form[fieldName]).then(function () {
+                                        resolve(1);
                                     });
-                                });
+                                } else {
+                                    var e_grammar = node.getElementsByTagName("grammar");
+                                    var e_prompt = node.getElementsByTagName("prompt");
+                                    console.log(e_prompt[0].textContent);
+                                    VXMLParser.speech(e_prompt[0].textContent).then(function () {
+                                        var grammar = e_grammar[0].textContent.replace(/(?:]|\[)/g, '').trim().split("|");
+                                        console.log(grammar);
+                                        $this.recognitionGrammar(grammar).then(function (recognizedText) {
+                                            console.log("Powiedziałeś: " + recognizedText);
+                                            if (recognizedText == "") {
+                                                resolve(0);
+                                            } else {
+                                                form[fieldName] = recognizedText;
+                                                $this.setField(fieldName, recognizedText).then(function () {
+                                                    resolve(1);
+                                                });
+                                            }
+                                        });
+                                    });
+                                }
                             } else {
                                 resolve(1);
                             }
@@ -156,9 +167,55 @@ define(
                             resolve(1);
                             break;
                         case "initial":
-                            resolve(1);
+                            var rule = $this.grammar.getElementsByTagName("rule")[0].childNodes;
+                            VXMLParser.speech(node.getElementsByTagName("prompt")[0].textContent).then(function () {
+                                $this.recognition().then(function (recognizedText) {
+                                    if (recognizedText != "") {
+                                        var words = recognizedText.toLowerCase().trim().split(" ");
+                                        console.log(words);
+                                        var oneOf;
+                                        var k = 0;
+                                        var field_name;
+                                        var flag = false;
+                                        for (var i = 0; i < words.length && k < rule.length; i++) {
+                                            oneOf = rule[k].getElementsByTagName("one-of")[0].childNodes;
+                                            for (var j = 0; j < oneOf.length; j++) {
+                                                field_name = oneOf[j].lastChild.innerHTML;
+                                                field_name = field_name.replace("out.", "");
+                                                field_name = field_name.replace(/\"/g, "");
+                                                field_name = field_name.replace(";", "");
+                                                field_name = field_name.split("=");
+                                                //field_name = field_name.replace("=", "");
+                                                //field_name = field_name.replace(oneOf[j].firstChild.textContent.trim(), "");
+                                                //field_name = field_name.replace("\"\";", "");
+
+
+                                                field_name[0] = field_name[0].trim();
+                                                field_name[1] = field_name[1].trim();
+                                                if (oneOf[j].firstChild.textContent.trim().toLowerCase() == words[i]) {
+                                                    console.log(field_name[0] + " = " + words[i]);
+                                                    form[field_name[0]] = field_name[1];
+                                                    k++;
+                                                    flag = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (flag || count == 2) {
+                                        count = 0;
+                                        resolve(1);
+                                    } else {
+                                        count++;
+                                        resolve(0);
+                                    }
+                                });
+                            });
                             break;
                         case "grammar":
+                            $this.grammar = node;
+                            resolve(1);
+                            break;
+                        default:
                             resolve(1);
                             break;
                     }
@@ -167,13 +224,15 @@ define(
 
             async parse(xml) {
 
+                // console.log(xml);
+
                 //console.log("This is vxml parser.");
 
                 var forms = xml.getElementsByTagName("form");
                 var nodes = forms[0].childNodes;
-                console.log(form);
 
                 //nodes.forEach(await doTheThing);
+
                 var i = 0;
                 var k;
                 var f;
@@ -199,7 +258,7 @@ define(
                 }
 
                 console.log("vxml finished!");
-
+                $this.finish();
                 //await VXMLParser.speech("ala ma kota");
                 //console.log("ala ma kota");
 
@@ -253,8 +312,8 @@ define(
                     $this.recognition().then(function (recognizedText) {
                         var text = "";
                         for (var i = 0; i < grammar.length; i++) {
-                            if (recognizedText.includes(grammar[i])) {
-                                text = grammar[i];
+                            if (recognizedText.toLowerCase().includes(grammar[i].toLowerCase())) {
+                                text = grammar[i].toLowerCase();
                             }
                         }
                         if (grammar.length == 0) {

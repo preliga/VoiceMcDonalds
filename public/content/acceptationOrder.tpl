@@ -61,51 +61,109 @@
 	<?xml version="1.0"?>
 	<vxml version="2.0">
 		<form>
-			<block>
-				<prompt>Witaj świecie!</prompt>
-			</block>
-
-
-
             {if $type == 2}
                 <grammar>
+					<rule>
+						<item>
+							<one-of>
+								<item>miodowa<tag>out.streetName="miodowa";</tag></item>
+								<item>stalowa<tag>out.streetName="stalowa";</tag></item>
+								<item>kacprzaka<tag>out.streetName="kacprzaka";</tag></item>
+								
+								<item>1<tag>out.streetNumber="1";</tag></item>
+								<item>2<tag>out.streetNumber="2";</tag></item>
+								<item>3<tag>out.streetNumber="3";</tag></item>
+								<item>4<tag>out.streetNumber="4";</tag></item>
+								<item>5<tag>out.streetNumber="5";</tag></item>
+								<item>6<tag>out.streetNumber="6";</tag></item>
+								<item>7<tag>out.streetNumber="7";</tag></item>
+								<item>8<tag>out.streetNumber="8";</tag></item>
+								<item>9<tag>out.streetNumber="9";</tag></item>
+								<item>10<tag>out.streetNumber="10";</tag></item>
+								
+								<item>warszawa<tag>out.city="warszawa";</tag></item>
+								<item>brwinów<tag>out.city="brwinów";</tag></item>
+								<item>pruszków<tag>out.city="pruszków";</tag></item>
+							</one-of>
+						</item>
+						
+						<item repeat="0-1">
+							<one-of>
+								<item>miodowa<tag>out.streetName="miodowa";</tag></item>
+								<item>stalowa<tag>out.streetName="stalowa";</tag></item>
+								<item>kacprzaka<tag>out.streetName="kacprzaka";</tag></item>
+								
+								<item>1<tag>out.streetNumber="1";</tag></item>
+								<item>2<tag>out.streetNumber="2";</tag></item>
+								<item>3<tag>out.streetNumber="3";</tag></item>
+								<item>4<tag>out.streetNumber="4";</tag></item>
+								<item>5<tag>out.streetNumber="5";</tag></item>
+								<item>6<tag>out.streetNumber="6";</tag></item>
+								<item>7<tag>out.streetNumber="7";</tag></item>
+								<item>8<tag>out.streetNumber="8";</tag></item>
+								<item>9<tag>out.streetNumber="9";</tag></item>
+								<item>10<tag>out.streetNumber="10";</tag></item>
+								
+								<item>warszawa<tag>out.city="warszawa";</tag></item>
+								<item>brwinów<tag>out.city="brwinów";</tag></item>
+								<item>pruszków<tag>out.city="pruszków";</tag></item>
+							</one-of>
+						</item>
+						
+						<item repeat="0-1">
+							<one-of>
+								<item>miodowa<tag>out.streetName="miodowa";</tag></item>
+								<item>stalowa<tag>out.streetName="stalowa";</tag></item>
+								<item>kacprzaka<tag>out.streetName="kacprzaka";</tag></item>
+								
+								<item>1<tag>out.streetNumber="1";</tag></item>
+								<item>2<tag>out.streetNumber="2";</tag></item>
+								<item>3<tag>out.streetNumber="3";</tag></item>
+								<item>4<tag>out.streetNumber="4";</tag></item>
+								<item>5<tag>out.streetNumber="5";</tag></item>
+								<item>6<tag>out.streetNumber="6";</tag></item>
+								<item>7<tag>out.streetNumber="7";</tag></item>
+								<item>8<tag>out.streetNumber="8";</tag></item>
+								<item>9<tag>out.streetNumber="9";</tag></item>
+								<item>10<tag>out.streetNumber="10";</tag></item>
+								
+								<item>warszawa<tag>out.city="warszawa";</tag></item>
+								<item>brwinów<tag>out.city="brwinów";</tag></item>
+								<item>pruszków<tag>out.city="pruszków";</tag></item>
+							</one-of>
+						</item>
+					</rule>
                 </grammar>
 
                 <initial>
                     <prompt>Podaj adres</prompt>
                 </initial>
-
-                <field name="streetNumber">
-                    <prompt>Podaj numer domu</prompt>
-                    <grammar>[1|2|3|4|5|6|7|8|9|10]</grammar>
-                </field>
-
+				
                 <field name="streetName">
                     <prompt>Podaj nazwę ulicy</prompt>
-                    <grammar>[Miodowa|Złota|Marszałkowska]</grammar>
+					<grammar>[miodowa|stalowa|kacprzaka]</grammar>
+                </field>
+				
+				<field name="streetNumber">
+                    <prompt>Podaj numer domu</prompt>
+					<grammar>[1|2|3|4|5|6|7|8|9|10]</grammar>
                 </field>
 
                 <field name="city">
                     <prompt>Podaj miasto</prompt>
-                    <grammar>[Warszawa|Brwinów|Pruszków]</grammar>
+					<grammar>[warszawa|brwinów|pruszków]</grammar>
                 </field>
             {/if}
+			
 			<field name="paid">
 				<prompt>Czy zapłaciłeś?</prompt>
 				<grammar>[tak|nie]</grammar>
 			</field>
 			
-			<block>
-				<if cond="paid==tak">
-					<goto next="paid"/>
-				</if>
-			</block>
+			<subdialog name="paid" src="/paid">
+				<params name="paid" expr="paid"/>
+			</subdialog>
 			
-			<subdialog name="order" src="/paid?paid=nie"/>
-		</form>
-		
-		<form id="paid">
-			<subdialog name="order" src="/paid?paid=tak"/>
 		</form>
 	</vxml>
 </div>

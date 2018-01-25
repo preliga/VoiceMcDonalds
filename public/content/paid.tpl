@@ -25,7 +25,7 @@
 	<vxml version="2.0">
 		<form>
 			<block>
-				<prompt>Witaj</prompt>
+				<prompt>Dziękuje za zamówienie</prompt>
 			</block>
 		</form>
 	</vxml>
